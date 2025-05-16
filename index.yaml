@@ -1,0 +1,13 @@
+apiVersion: v1
+entries:
+  cert-manager-webhook-acmesh:
+  - apiVersion: v1
+    appVersion: 0.1.0
+    created: "2025-05-16T14:52:11.23950615Z"
+    description: Allow cert-manager to solve DNS challenges using acme sh
+    digest: c42432fa14e8dc9e4a2d1717eb1a7b314d32009dd701175e2945bb7dcbafc415
+    name: cert-manager-webhook-acmesh
+    urls:
+    - https://github.com/SomeBlackMagic/cert-manager-webhook-acmesh/releases/download/cert-manager-webhook-acmesh-0.1.0/cert-manager-webhook-acmesh-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-05-16T14:52:11.239513033Z"
