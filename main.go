@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"k8s.io/client-go/kubernetes"
 	"os"
@@ -33,9 +32,6 @@ func main() {
 	if GroupName == "" {
 		panic("GROUP_NAME must be specified")
 	}
-
-	flag.Set("v", "2")
-	flag.Parse()
 
 	klog.Infof("Starting webhook server with group name: %s", GroupName)
 	cmd.RunWebhookServer(GroupName, &customDNSProviderSolver{})
