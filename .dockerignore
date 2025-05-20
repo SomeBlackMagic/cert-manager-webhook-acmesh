@@ -1,0 +1,10 @@
+.idea
+.gitignore
+.github
+.dockerignore
+.git
+charts
+LICENSE
+README.md
+Makefile
+Dockerfile

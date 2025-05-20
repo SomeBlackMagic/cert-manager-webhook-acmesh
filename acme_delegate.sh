@@ -1,9 +1,9 @@
 #!/bin/bash
 
 echo '__________________________ acme_delegate initialize __________________________'
-export HOME=/root
+export HOME=/opt
 export DEBUG=3
-cd /root
+cd /opt
 export
 
 echo '__________________________ acme.sh environments __________________________'
@@ -14,8 +14,8 @@ dosk_txtvalue="$4"
 dosk_lasterror=""
 
 echo '__________________________ acme.sh delegate __________________________'
-source /root/.acme.sh/acme.sh --info
-source /root/.acme.sh/dnsapi/${dosk_dnsapi}.sh
+source /opt/.acme.sh/acme.sh --info
+source /opt/.acme.sh/dnsapi/${dosk_dnsapi}.sh
 ${dosk_dnsapi}_${dosk_action} "$dosk_fulldomain" "$dosk_txtvalue"
 retval=$?
 

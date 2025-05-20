@@ -22,7 +22,7 @@ import (
 
 const (
 	defaultTTL      = 600
-	acmeDelegate    = "/acme_delegate.sh"
+	acmeDelegate    = "/usr/local/bin/acme_delegate.sh"
 	acmeReturnValue = "ACME_RETVAL"
 )
 
@@ -33,8 +33,16 @@ func main() {
 		panic("GROUP_NAME must be specified")
 	}
 
-	klog.Infof("Starting webhook server with group name: %s", GroupName)
+	var commitHash = getCommitHash()
+	klog.Infof("Starting webhook server with group name: %s with version: %s", GroupName, commitHash)
 	cmd.RunWebhookServer(GroupName, &customDNSProviderSolver{})
+}
+
+func getCommitHash() string {
+	if val := os.Getenv("COMMIT_HASH"); val != "" {
+		return val
+	}
+	return "unknown"
 }
 
 type customDNSProviderSolver struct {
@@ -74,16 +82,9 @@ func (c *customDNSProviderSolver) DoDNSAPI(action string, ch *v1alpha1.Challenge
 		return err
 	}
 
-	envData, ok := envSecret.Data["env"]
-	if !ok {
-		klog.Errorf("Missing 'env' key in secret")
-		return fmt.Errorf("no env in secret")
-	}
-
-	env := envFromSecret{}
-	if err := json.Unmarshal(envData, &env); err != nil {
-		klog.Errorf("Failed to unmarshal env data: %v", err)
-		return err
+	envVars := []string{}
+	for key, val := range envSecret.Data {
+		envVars = append(envVars, fmt.Sprintf("%s=%s", key, string(val)))
 	}
 
 	uuid := uuid.New()
@@ -96,18 +97,12 @@ func (c *customDNSProviderSolver) DoDNSAPI(action string, ch *v1alpha1.Challenge
 
 	procAttr := &os.ProcAttr{
 		Files: []*os.File{os.Stdin, stdoutFile, os.Stderr},
-		Env:   env,
-	}
-
-	dir, err := os.Getwd()
-	if err != nil {
-		klog.Errorf("Failed to get working directory: %v", err)
-		return err
+		Env:   envVars,
 	}
 
 	klog.Infof("Executing %s with action=%s", acmeDelegate, action)
-	process, err := os.StartProcess(dir+acmeDelegate, []string{
-		dir + acmeDelegate, cfg.DNSAPI, action, util.UnFqdn(ch.ResolvedFQDN), ch.Key,
+	process, err := os.StartProcess(acmeDelegate, []string{
+		acmeDelegate, cfg.DNSAPI, action, util.UnFqdn(ch.ResolvedFQDN), ch.Key,
 	}, procAttr)
 	if err != nil {
 		klog.Errorf("Failed to start process: %v", err)
