@@ -2,7 +2,8 @@
 
 echo '__________________________ acme_delegate initialize __________________________'
 export HOME=/opt
-cd /opt
+export DEBUG=${DEBUG:-0}
+cd ${HOME}
 export
 
 echo '__________________________ acme.sh environments __________________________'
