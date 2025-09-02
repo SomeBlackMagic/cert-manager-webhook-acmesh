@@ -2,7 +2,6 @@
 
 echo '__________________________ acme_delegate initialize __________________________'
 export HOME=/opt
-export DEBUG=3
 cd /opt
 export
 
