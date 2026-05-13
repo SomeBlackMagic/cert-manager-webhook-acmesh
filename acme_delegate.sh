@@ -1,12 +1,12 @@
-#!/bin/bash
-set -euo pipefail
+#!/usr/bin/env sh
+set -eu
 
 DNSAPI="$1"
 ACTION="$2"
 DOMAIN="$3"
 TXTVALUE="$4"
 
-if [[ ! "$DNSAPI" =~ ^[a-zA-Z0-9_]+$ ]]; then
+if ! echo "$DNSAPI" | grep -qE '^[a-zA-Z0-9_]+$'; then
     echo "ERROR: invalid dnsapi name: $DNSAPI" >&2
     echo "ACME_RETVAL1ACME_RETVAL"
     exit 1
@@ -20,10 +20,10 @@ echo "=== acme_delegate: start dnsapi=$DNSAPI action=$ACTION domain=$DOMAIN ==="
 export
 
 echo "=== acme_delegate: loading acme.sh ==="
-source /opt/.acme.sh/acme.sh --info
+. /opt/.acme.sh/acme.sh --info
 
 echo "=== acme_delegate: loading dnsapi module $DNSAPI ==="
-source /opt/.acme.sh/dnsapi/${DNSAPI}.sh
+. /opt/.acme.sh/dnsapi/${DNSAPI}.sh
 
 echo "=== acme_delegate: executing ${DNSAPI}_${ACTION} ==="
 "${DNSAPI}_${ACTION}" "$DOMAIN" "$TXTVALUE"
