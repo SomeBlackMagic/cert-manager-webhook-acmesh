@@ -20,10 +20,10 @@ echo "=== acme_delegate: start dnsapi=$DNSAPI action=$ACTION domain=$DOMAIN ==="
 export
 
 echo "=== acme_delegate: loading acme.sh ==="
-. /opt/.acme.sh/acme.sh --info
+. /acmebin/acme.sh --info
 
 echo "=== acme_delegate: loading dnsapi module $DNSAPI ==="
-. /opt/.acme.sh/dnsapi/${DNSAPI}.sh
+. /acmebin/dnsapi/${DNSAPI}.sh
 
 echo "=== acme_delegate: executing ${DNSAPI}_${ACTION} ==="
 "${DNSAPI}_${ACTION}" "$DOMAIN" "$TXTVALUE"
