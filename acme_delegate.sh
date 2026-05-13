@@ -12,6 +12,9 @@ if ! echo "$DNSAPI" | grep -qE '^[a-zA-Z0-9_]+$'; then
     exit 1
 fi
 
+export HOME=/acme.sh
+export LE_WORKING_DIR=/acmebin
+export LE_CONFIG_HOME=/acme.sh
 export DEBUG="${DEBUG:-3}"
 
 
