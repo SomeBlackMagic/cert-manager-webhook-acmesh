@@ -12,9 +12,8 @@ if ! echo "$DNSAPI" | grep -qE '^[a-zA-Z0-9_]+$'; then
     exit 1
 fi
 
-export HOME=/opt
 export DEBUG="${DEBUG:-3}"
-cd /opt
+
 
 echo "=== acme_delegate: start dnsapi=$DNSAPI action=$ACTION domain=$DOMAIN ==="
 export
