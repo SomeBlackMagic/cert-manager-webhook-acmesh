@@ -51,7 +51,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 FROM neilpang/acme.sh
 
 COPY --from=build --chown=acme:acme --chmod=777 /workspace/webhook /usr/local/bin/webhook
-COPY --chown=acme:acme --chmod=777 acme_delegate.sh /usr/local/bin/acme_delegate.sh
+COPY --chown=acme:acme --chmod=777 acme_delegate.sh /acmebin/acme_delegate.sh
 
 
 USER acme

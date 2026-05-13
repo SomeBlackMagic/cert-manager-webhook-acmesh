@@ -22,7 +22,7 @@ import (
 
 const (
 	defaultTTL        = 600
-	acmeDelegate      = "/usr/local/bin/acme_delegate.sh"
+	acmeDelegate      = "/acmebin/acme_delegate.sh"
 	acmeDelegateTimeout = 2 * time.Minute
 )
 
