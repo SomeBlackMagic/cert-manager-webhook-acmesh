@@ -84,7 +84,7 @@ func (c *customDNSProviderSolver) DoDNSAPI(action string, ch *v1alpha1.Challenge
 		return err
 	}
 
-	envVars := []string{}
+	envVars := os.Environ()
 	for key, val := range envSecret.Data {
 		envVars = append(envVars, fmt.Sprintf("%s=%s", key, string(val)))
 	}
