@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -e
 
 DNSAPI="$1"
 ACTION="$2"
