@@ -18,7 +18,9 @@ export DEBUG="${DEBUG:-3}"
 echo "=== acme_delegate: start dnsapi=$DNSAPI action=$ACTION domain=$DOMAIN ==="
 
 echo "=== acme_delegate: loading acme.sh ==="
+set +e
 . /acmebin/acme.sh --info
+set -e
 
 echo "=== acme_delegate: loading dnsapi module $DNSAPI ==="
 . /acmebin/dnsapi/${DNSAPI}.sh
